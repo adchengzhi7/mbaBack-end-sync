@@ -35,7 +35,7 @@ jobs:
         username: ${{ secrets.EC2_USERNAME }}  # EC2 使用者名稱
         key: ${{ secrets.EC2_SSH_KEY }}  # EC2 SSH 密鑰
         source: "./"  # 傳送當前目錄的所有文件
-        target: "/home/ubuntu/your-backend-app"  # 傳送目標目錄
+        target: "/home/ubuntu/mbaSite/backend"  # 傳送目標目錄
         exclude: |  # 排除以下文件或文件夾
           node_modules
           .git
