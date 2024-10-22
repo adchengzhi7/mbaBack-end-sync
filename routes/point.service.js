@@ -29,7 +29,7 @@ module.exports={
     
     getPointByStuId:(id,callBack)=>{
         pool.query(
-            'SELECT pt.pointsType_descp AS section,p.points_title AS section_title, concat(p.points_regYear, p.points_regSemester) AS semester,p.points_credit AS point , p.points_status AS status,p.points_englishCredit AS englishCredit, p.no as pointId FROM points AS p INNER JOIN points_type AS pt ON p.points_type=pt.pointsType_id WHERE p.points_stuid=? AND p.points_status !=3',
+            'SELECT pt.pointsType_descp AS section,p.points_title AS section_title, concat(p.points_regYear, p.points_regSemester) AS semester,p.points_credit AS point , p.points_status AS status,p.points_englishCredit AS englishCredit, p.points_scholarshipHours As scholarshipHours,p.no as pointId FROM points AS p INNER JOIN points_type AS pt ON p.points_type=pt.pointsType_id WHERE p.points_stuid=? AND p.points_status !=3',
             [id],
             (error,results)=>{
                 if(error){
