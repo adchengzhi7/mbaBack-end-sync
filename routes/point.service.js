@@ -2,6 +2,7 @@ const pool= require("../config/db")
 
 module.exports={
     createPoint:(data,callBack)=>{
+        console.log("Received data:", data);
         pool.query(
                 `INSERT INTO points (points_type,points_title,points_regYear,points_regSemester,points_credit,points_status,points_stuid,points_englishCredit,points_regTime,points_scholarshipHours)
                 VALUES (?,?,?,?,?,?,?,?,?,?)`,
