@@ -60,8 +60,6 @@ module.exports={
                 data.studentid,
             ],
             (error,results)=>{
-                console.log(pool.query);
-                console.log(results);
                 if(error){
                     return callBack(error)
                 }
