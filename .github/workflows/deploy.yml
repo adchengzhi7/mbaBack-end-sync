@@ -1,0 +1,58 @@
+name: Deploy Express Backend to EC2
+
+on:
+  push:
+    branches: [ main ]  # 當推送到 main 分支時觸發
+  workflow_dispatch:  # 允許手動觸發
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2  # 檢出當前代碼
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'  # 使用 Node.js 18 版本
+    
+    - name: Create .env file  # 創建 .env 文件
+      run: |
+        echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" > .env
+        echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> .env
+        echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+        echo "MYSQL_PASS=${{ secrets.MYSQL_PASS }}" >> .env
+        echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+        echo "VERSION=1.0.0" >> .env
+        # 其他環境變數也可以按照這樣的方式加入
+
+    - name: Deploy to EC2  # 傳送代碼到 EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}  # EC2 主機 IP
+        username: ${{ secrets.EC2_USERNAME }}  # EC2 使用者名稱
+        key: ${{ secrets.EC2_SSH_KEY }}  # EC2 SSH 密鑰
+        source: "./"  # 傳送當前目錄的所有文件
+        target: "/home/ubuntu/your-backend-app"  # 傳送目標目錄
+        exclude: |  # 排除以下文件或文件夾
+          node_modules
+          .git
+          .env.local
+          .env.development
+
+    - name: Setup and restart application on EC2  # 安裝依賴並啟動或重啟應用
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd /home/ubuntu/your-backend-app
+          npm install  # 安裝依賴
+          if pm2 list | grep -q "www"; then  # 檢查應用是否已存在
+            pm2 restart www  # 如果存在，重啟應用
+          else
+            pm2 start app.js --name "www"  # 如果不存在，啟動應用並命名為 "www"
+          fi
