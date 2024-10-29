@@ -179,7 +179,7 @@ module.exports={
                 const result = compareSync(body.password,results.usersDetails_pass);
                 if(result){
                     results.usersDetails_pass = undefined;
-
+                    console.log(results); 
                     const jsontoken = sign({result:results},"mbaNccuMba",{
                         expiresIn:"1h"
                     });
