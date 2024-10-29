@@ -51,22 +51,24 @@ module.exports={
         )
 
     },
-    updateUser:(data,callBack) =>{
-        
+    updateUser: (data, callBack) => {
         pool.query(
-            'UPDATE users_details SET usersDetails_cName=? WHERE usersDetails_stuId=?',
+            'UPDATE users_details SET usersDetails_cName = ?, usersDetails_email = ?, usersDetails_psId = ?, usersDetails_type = ?, usersDetails_pass = ? WHERE usersDetails_stuId = ?',
             [
-                data.name,
-                data.studentid,
+                data.name,        // 用戶名稱
+                data.email,       // Email
+                data.pId,         // psId
+                data.type,        // 類型
+                data.password,    // 密碼 (可選)
+                data.studentid    // 用來查找用戶的學號
             ],
-            (error,results)=>{
-                if(error){
-                    return callBack(error)
+            (error, results) => {
+                if (error) {
+                    return callBack(error);
                 }
-                return callBack(null,results)
+                return callBack(null, results);
             }
-        )
-
+        );
     },
     deleteUser:(data,callBack)=>{
         pool.query(

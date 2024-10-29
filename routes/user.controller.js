@@ -118,26 +118,36 @@ module.exports={
 
         
     },
-    updateUser:(req,res) =>{
+    updateUser: (req, res) => {
         const body = req.body;
-        updateUser(body,(err,result)=>{
-            if(err){
+        const salt = genSaltSync(10);
+        
+        // 檢查是否提供了新的密碼
+        if (body.pId) {
+            body.password = hashSync(body.pId, salt); // 將密碼哈希化
+        }
+
+        updateUser(body, (err, result) => {
+            if (err) {
                 console.log(err);
-                return;
-            }
-            if(!result){
                 return res.json({
-                success:0,
-                message:"Failed to update User2",
-                error:err,
-                result:result,
-                })
+                    success: 0,
+                    message: "Failed to update User",
+                    error: err,
+                    result: result,
+                });
+            }
+            if (!result) {
+                return res.json({
+                    success: 0,
+                    message: "User not found",
+                });
             }
             return res.json({
-                success:1,
-                message:"updated successfully"
-            })
-        })
+                success: 1,
+                message: "User updated successfully",
+            });
+        });
     },
     deleteUser:(req,res)=>{
         const data = req.body;
