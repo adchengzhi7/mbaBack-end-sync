@@ -3,8 +3,8 @@ const pool= require("../config/db")
 module.exports={
     createPoint:(data,callBack)=>{
         pool.query(
-                `INSERT INTO points (points_type,points_title,points_regYear,points_regSemester,points_credit,points_status,points_stuid,points_englishCredit,points_regTime,points_scholarshipHours)
-                VALUES (?,?,?,?,?,?,?,?,?,?)`,
+                `INSERT INTO points (points_type,points_title,points_regYear,points_regSemester,points_credit,points_status,points_stuid,points_englishCredit,points_regTime,points_scholarshipHours,points_englishCredit_date)
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
             [
                 data.type,
                 data.sectionTitle,
@@ -16,6 +16,7 @@ module.exports={
                 data.englishCredit,
                 data.insertDate,
                 data.scholarshipHours,
+                data.testDate,
                 
             ],
             (error,results) =>{
@@ -67,25 +68,29 @@ module.exports={
         )
 
     },
-    updatePoint:(data,callBack) =>{
+    updatePoint: (data, callBack) => {
         pool.query(
-            'UPDATE points SET points_title=?,points_regYear=?,points_regSemester=? ,points_credit=?, points_englishCredit=? WHERE no=?',
+            `UPDATE points 
+             SET points_title=?, points_regYear=?, points_regSemester=?, points_credit=?, points_englishCredit=?, points_regTime=?, points_scholarshipHours=?, points_englishCredit_date=? 
+             WHERE no=?`,
             [
                 data.sectionTitle,
                 data.yearSelected,
                 data.semesterSelected,
                 data.points,
                 data.englishCredit,
-                data.pointsId,
+                data.insertDate,        // Ensure consistency with createPoint
+                data.scholarshipHours,  // Ensure consistency with createPoint
+                data.testDate,          // Ensure consistency with createPoint
+                data.pointsId,          // Identifier for updating the correct record
             ],
-            (error,results)=>{
-                if(error){
-                    return callBack(error)
+            (error, results) => {
+                if (error) {
+                    return callBack(error);
                 }
-                return callBack(null,results)
+                return callBack(null, results);
             }
-        )
-
+        );
     },
     chgPointStatus:(data,callBack) =>{
         pool.query(
