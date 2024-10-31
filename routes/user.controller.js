@@ -58,11 +58,11 @@ module.exports={
 
                     try{
                         const a = await create(body)
-                        console.log(a);
+                        // console.log(a);
                         res.send(a);
 
                     }catch(e){
-                        console.log(e);
+                        // console.log(e);
                         res.send(e);
                     }
 
@@ -189,7 +189,7 @@ module.exports={
                 const result = compareSync(body.password,results.usersDetails_pass);
                 if(result){
                     results.usersDetails_pass = undefined;
-                    console.log(results); 
+                    // console.log(results); 
                     const jsontoken = sign({result:results},"mbaNccuMba",{
                         expiresIn:"1h"
                     });
