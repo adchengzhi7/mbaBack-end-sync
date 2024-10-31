@@ -57,7 +57,7 @@ module.exports={
     },
     getPointByPointId:(id,callBack)=>{
         pool.query(
-            'SELECT p.no AS pointId, p.points_stuid AS stuId, p.points_stuid AS stuId, pt.pointsType_descp AS section,p.points_title AS sectionTitle,p.points_regYear AS yearSelected , p.points_regSemester AS semesterSelected,p.points_credit AS point , p.points_status AS status,p.points_englishCredit AS englishCredit, pt.pointsType_id AS type,pt.pointsType_icon AS icon FROM points AS p INNER JOIN points_type AS pt ON p.points_type=pt.pointsType_id WHERE p.no =?',
+            'SELECT p.no AS pointId, p.points_stuid AS stuId, pt.pointsType_descp AS section,p.points_title AS sectionTitle,p.points_regYear AS yearSelected, p.points_regSemester AS semesterSelected,p.points_credit AS point, p.points_status AS status,p.points_englishCredit AS englishCredit, p.points_scholarshipHours AS scholarshipHours,p.points_englishCredit_date englishCreditDate,pt.pointsType_id AS type,pt.pointsType_icon AS icon FROM points AS p INNER JOIN points_type AS pt ON p.points_type = pt.pointsType_id WHERE p.no = ?',
             [id],
             (error,results)=>{
                 if(error){
