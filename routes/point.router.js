@@ -1,5 +1,5 @@
 
-const {getPointByStuId,createPoint,getUnReviewPoint,getPointByPointId,updatePoint,approvePoint,deletePoint} =require("./point.controller")
+const {getPointByStuId,createPoint,getUnReviewPoint,getPointByPointId,updatePoint,approvePoint,deletePoint,exportDataByTa} =require("./point.controller")
 const router = require("express").Router();
 const {checkToken} =require("../auth/token_validation")
 
