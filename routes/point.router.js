@@ -10,5 +10,6 @@ router.patch("/edit/",checkToken,updatePoint);
 router.patch("/approve/",checkToken,approvePoint);
 router.patch("/delete/",checkToken,deletePoint);
 router.get("/:stuId",checkToken,getPointByStuId);
+router.post("/export", checkToken, exportDataByTa); // 新增 export 路由
 
 module.exports =router;

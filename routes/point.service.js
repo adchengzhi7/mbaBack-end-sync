@@ -108,6 +108,29 @@ module.exports={
         )
 
     },
+    exportDataByTa: (exportList, callBack) => {
+        // 將陣列轉換成逗號分隔的字串
+        const pointTypeValues = exportList.pointType.join(',');
+        const statusValues = exportList.status.join(',');
+    
+        pool.query(
+            `
+            SELECT * 
+            FROM points AS p
+            WHERE 
+                LEFT(p.points_stuid, 3) = ?
+                AND p.points_type IN (${pointTypeValues})
+                AND p.points_status IN (${statusValues})
+            `,
+            [exportList.yearSelected.toString().slice(0, 3)],
+            (error, results) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null, results);
+            }
+        );
+    },
 
 
 }

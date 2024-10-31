@@ -3,7 +3,8 @@ const{ getPointByPointId,
     createPoint,
     getUnReviewPoint,
     updatePoint,
-    chgPointStatus
+    chgPointStatus,
+    exportDataByTa
 } =require("../routes/point.service")
 const { json } = require("express");
 
@@ -139,7 +140,24 @@ module.exports={
                 message:"PointSTS delete successfully"
             })
         })
-    }
+    },
+    exportDataByTa: (req, res) => {
+        const exportList = req.body;
+        exportDataByTa(exportList, (err, results) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    success: 0,
+                    message: "Database connection error",
+                });
+            }
+            return res.status(200).json({
+                success: 1,
+                data: results,
+            });
+        });
+    },
+
    
     
 }
