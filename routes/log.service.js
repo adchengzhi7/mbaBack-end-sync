@@ -44,4 +44,14 @@ module.exports = {
             return callBack(null, results);
         });
     },
+    // 獲取所有日誌
+    getAllLogs: (callBack) => {
+        const sql = `SELECT * FROM logs ORDER BY action_time DESC`; // 按時間倒序排列
+        pool.query(sql, (error, results) => {
+            if (error) {
+                return callBack(error);
+            }
+            return callBack(null, results);
+        });
+    }
 };

@@ -1,4 +1,4 @@
-const { createLog } = require("../routes/log.service"); // 確保導入的服務函數名稱不重複
+const { createLog,getAllLogs } = require("../routes/log.service"); // 確保導入的服務函數名稱不重複
 
 const createLogController = (req, res) => {
     // 解析所有的日誌參數，並設定預設值為 null
@@ -45,6 +45,25 @@ const createLogController = (req, res) => {
     });
 };
 
+
+// 獲取所有日誌的控制器
+const getAllLogsController = (req, res) => {
+    getAllLogs((err, results) => {
+        if (err) {
+            console.error("Failed to retrieve logs:", err);
+            return res.status(500).json({
+                success: 0,
+                message: "無法查詢日誌"
+            });
+        }
+        return res.status(200).json({
+            success: 1,
+            data: results
+        });
+    });
+};
+
 module.exports = {
-    createLog: createLogController
+    createLog: createLogController,
+    getAllLogs: getAllLogsController
 };

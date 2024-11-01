@@ -6,7 +6,7 @@ const { checkToken } = require("../auth/token_validation");
 
 // 路由設定
 router.post("/", checkToken, createLog); // 新增日誌
-// router.get("/", checkToken, getLogs); // 取得所有日誌
+router.get("/", checkToken, getAllLogs); // 取得所有日誌
 // router.get("/:logId", checkToken, getLogById); // 取得特定日誌
 // router.delete("/:logId", checkToken, deleteLog); // 刪除特定日誌
 // router.post("/export", checkToken, exportLogData); // 匯出日誌資料
