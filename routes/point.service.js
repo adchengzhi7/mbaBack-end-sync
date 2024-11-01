@@ -115,8 +115,10 @@ module.exports={
     
         pool.query(
             `
-            SELECT * 
+            SELECT p.*, u.usersDetails_cName
             FROM points AS p
+            LEFT JOIN users_details AS u
+            ON p.points_stuid = u.usersDetails_stuId
             WHERE 
                 LEFT(p.points_stuid, 3) = ?
                 AND p.points_type IN (${pointTypeValues})
