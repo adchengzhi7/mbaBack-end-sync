@@ -1,5 +1,5 @@
 const {
-    createLog,
+    createLog,getAllLogs
 } = require("./log.controller"); // 引入日誌控制器
 const router = require("express").Router();
 const { checkToken } = require("../auth/token_validation");
