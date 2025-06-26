@@ -1,4 +1,5 @@
 // cors/index.js
+console.log('🚀 [CORS] middleware loaded');
 const cors = require('cors');
 
 const corsOptions = {
