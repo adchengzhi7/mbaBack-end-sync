@@ -1,3 +1,4 @@
+console.log('🖥️ app.js loaded')
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
