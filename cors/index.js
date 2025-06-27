@@ -17,7 +17,7 @@ const corsOptions = {
     }
   },
   credentials: true,                              // 允许 cookie
-  methods: ['GET', 'POST', 'OPTIONS'],            // 明确声明允许的方法
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],       // 明确声明允许的方法
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200
 };
